@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+worker/output/
+worker/data/
+*.mp4
+*.mp3
+*.png
+*.jpg
+*.jpeg
+*.srt
+.DS_Store

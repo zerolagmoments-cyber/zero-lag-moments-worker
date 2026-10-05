@@ -54,4 +54,4 @@ GitHub-hosted runners are temporary. Generated files are available only during t
 
 ## Setup
 
-See `worker/SETUP-GITHUB.md`.
+See `worker/SETUP-GITHUB.md`. The Netlify dashboard dispatches the GitHub Actions workflow for Run Now and reads worker/job state from PostgreSQL.

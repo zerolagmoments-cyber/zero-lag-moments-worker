@@ -1,0 +1,30 @@
+import 'dotenv/config';
+export const cfg = {
+  port: Number(process.env.PORT || 8787),
+  workerId: process.env.WORKER_ID || `worker-${process.env.HOSTNAME || 'local'}`,
+  databaseUrl: process.env.DATABASE_URL,
+  databaseSsl: String(process.env.DATABASE_SSL || 'true').toLowerCase() !== 'false',
+  scheduleMinutes: Number(process.env.SCHEDULE_MINUTES || 90),
+  netlifyApiUrl: process.env.NETLIFY_API_URL,
+  workerSecret: process.env.WORKER_API_SECRET,
+  geminiKey: process.env.GEMINI_API_KEY,
+  geminiTextModel: process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash',
+  geminiImageModel: process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image',
+  elevenKey: process.env.ELEVENLABS_API_KEY,
+  elevenVoice: process.env.ELEVENLABS_VOICE_ID,
+  elevenModel: process.env.ELEVENLABS_MODEL_ID || 'eleven_flash_v2_5',
+  youtubeApiKey: process.env.YOUTUBE_API_KEY,
+  autoPublish: String(process.env.AUTO_PUBLISH).toLowerCase() === 'true',
+  shortsPerDay: Number(process.env.SHORTS_PER_DAY || 10),
+  longsPerDay: Number(process.env.LONGS_PER_DAY || 1),
+  runHourPK: Number(process.env.RUN_HOUR_PK || 8),
+  runMinutePK: Number(process.env.RUN_MINUTE_PK || 0),
+  pollMinutes: Number(process.env.POLL_MINUTES || 30),
+  scenesShort: Number(process.env.SCENES_PER_SHORT || 5),
+  scenesLong: Number(process.env.SCENES_PER_LONG || 10),
+  outputDir: process.env.OUTPUT_DIR || './output',
+  dataDir: process.env.DATA_DIR || './data',
+  ffmpeg: process.env.FFMPEG_BIN || 'ffmpeg',
+  ffprobe: process.env.FFPROBE_BIN || 'ffprobe'
+};
+export function requireKeys(keys){ const missing=keys.filter(k=>!cfg[k]); if(missing.length) throw new Error(`Missing worker config: ${missing.join(', ')}`); }

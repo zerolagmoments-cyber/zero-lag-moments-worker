@@ -2,7 +2,14 @@ name: Zero Lag Moments Worker
 
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Run immediately, ignoring the scheduled next_run time'
+        required: false
+        default: 'false'
   schedule:
+    # Check every 15 minutes. The PostgreSQL next_run value enforces the real
+    # 90-minute cadence and prevents duplicate work.
     - cron: '*/15 * * * *'
 
 concurrency:
@@ -16,7 +23,6 @@ jobs:
   run-worker:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,31 +46,23 @@ jobs:
           DATABASE_SSL: 'true'
           WORKER_ID: github-actions-worker
           SCHEDULE_MINUTES: '90'
-
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL || 'gemini-2.5-flash' }}
           GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image' }}
-
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
           ELEVENLABS_MODEL_ID: ${{ vars.ELEVENLABS_MODEL_ID || 'eleven_flash_v2_5' }}
-
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-
           NETLIFY_API_URL: ${{ secrets.NETLIFY_API_URL }}
           WORKER_API_SECRET: ${{ secrets.WORKER_API_SECRET }}
-
           AUTO_PUBLISH: ${{ vars.AUTO_PUBLISH || 'false' }}
-
+          FORCE_RUN: ${{ github.event.inputs.force || 'false' }}
           SHORTS_PER_DAY: '10'
           LONGS_PER_DAY: '1'
-
           SCENES_PER_SHORT: '5'
           SCENES_PER_LONG: '10'
-
           OUTPUT_DIR: ./output
           DATA_DIR: ./data
           FFMPEG_BIN: ffmpeg
           FFPROBE_BIN: ffprobe
-
         run: npm run once
