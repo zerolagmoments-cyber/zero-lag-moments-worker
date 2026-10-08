@@ -8,7 +8,7 @@ export const cfg = {
   netlifyApiUrl: process.env.NETLIFY_API_URL,
   workerSecret: process.env.WORKER_API_SECRET,
   geminiKey: process.env.GEMINI_API_KEY,
-  geminiTextModel: process.env.GEMINI_TEXT_MODEL || 'gemini-2.5-flash',
+  geminiTextModel: process.env.GEMINI_TEXT_MODEL || 'gemini-3.8-flash',
   geminiImageModel: process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image',
   elevenKey: process.env.ELEVENLABS_API_KEY,
   elevenVoice: process.env.ELEVENLABS_VOICE_ID,
